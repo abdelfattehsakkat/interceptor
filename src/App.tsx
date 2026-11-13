@@ -31,9 +31,13 @@ export default function App() {
   const [route, setRoute] = useState(parseHash());
   const [source, setSource] = useState<string | null>(null);
   const [input, setInput] = useState<CaseInput>({});
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const on = () => setRoute(parseHash());
+    const on = () => {
+      setRoute(parseHash());
+      setMenuOpen(false);
+    };
     window.addEventListener('hashchange', on);
     return () => window.removeEventListener('hashchange', on);
   }, []);
@@ -61,7 +65,17 @@ export default function App() {
   return (
     <Ctx.Provider value={ctx}>
       <div className="app">
-        <aside className="sidebar">
+        <div className="mobile-bar no-print">
+          <button className="burger" aria-label="Ouvrir le menu" aria-expanded={menuOpen} onClick={() => setMenuOpen((o) => !o)}>
+            <span />
+            <span />
+            <span />
+          </button>
+          <div className="brand-mark">II</div>
+          <strong>Guide Classe II</strong>
+        </div>
+        {menuOpen && <div className="menu-back no-print" onClick={() => setMenuOpen(false)} />}
+        <aside className={`sidebar${menuOpen ? ' open' : ''}`}>
           <div className="brand">
             <div className="brand-mark">II</div>
             <div>
