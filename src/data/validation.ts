@@ -1,0 +1,166 @@
+export type Risk = 'élevé' | 'moyen' | 'faible';
+
+export interface ValidationItem {
+  id: string;
+  risk: Risk;
+  title: string;
+  question: string;
+  positionA: { label: string; text: string; sources: string[] };
+  positionB: { label: string; text: string; sources: string[] };
+  currentChoice: string;
+}
+
+export const VALIDATION: ValidationItem[] = [
+  {
+    id: 'V01',
+    risk: 'élevé',
+    title: 'Place de l\'éducateur fonctionnel dans la décision',
+    question: 'Dans quels profils le guide peut-il proposer l\'éducateur fonctionnel comme « piste logique » ?',
+    positionA: {
+      label: 'Option légitime à faible coût',
+      text: 'Réduit l\'overjet vs aucun traitement ; avantage principal = coût ; pas de différence à long terme avec les activateurs.',
+      sources: ['papageorgiou2019', 'mohammed2020', 'usumez2004'],
+    },
+    positionB: {
+      label: 'Efficacité inférieure aux appareils sur mesure',
+      text: 'ANB −0,9° vs −1,89° et overjet −1,5 vs −3,0 mm contre l\'activateur ; plus de gêne ; preuves de faible qualité.',
+      sources: ['idris2019', 'idris2012', 'papageorgiou2019'],
+    },
+    currentChoice: 'Piste logique seulement si composante dentoalvéolaire, denture mixte et coopération bonne ; réserves ou déconseillé sinon.',
+  },
+  {
+    id: 'V02',
+    risk: 'élevé',
+    title: 'Fiabilité de la CVM comme seul critère du moment',
+    question: 'La CVM suffit-elle pour classer un patient prépubère / pubertaire / postpubertaire ?',
+    positionA: { label: 'Fiabilité insuffisante', text: 'Concordance inter-observateurs < 50 %, ~30 % de cas non classables.', sources: ['gabriel2009', 'nestman2011'] },
+    positionB: { label: 'Acceptable', text: '≈ 68 % de concordance, erreurs d\'un stade ; corrélation avec main-poignet.', sources: ['perinetti2014cvm', 'cericato2015', 'szemraj2018'] },
+    currentChoice: 'Le guide utilise la CVM, affiche les deux positions et signale les doutes d\'âge/stade. Alternative main-poignet non intégrée.',
+  },
+  {
+    id: 'V03',
+    risk: 'élevé',
+    title: 'Seuil de risque traumatique justifiant d\'agir tôt',
+    question: 'À partir de quel overjet et dans quel contexte le traitement précoce se justifie-t-il ?',
+    positionA: { label: 'Bénéfice démontré', text: 'Traumatismes 19 % vs 30 % avec traitement précoce ; NNT 10 (IC 95 % 5–174) avec fonctionnel.', sources: ['batista2018', 'thiruvenkatachari2015'] },
+    positionB: { label: 'Incertitude importante', text: 'Intervalle de confiance très large du NNT ; aucun autre avantage ; coût et durée plus élevés.', sources: ['obrien2009', 'thiruvenkatachari2015'] },
+    currentChoice: 'Le guide considère à risque un overjet > 6 mm (catégorie d\'overjet de la méta-analyse de Petti) ou un antécédent de traumatisme. Seuil à valider.',
+  },
+  {
+    id: 'V04',
+    risk: 'élevé',
+    title: 'Incisives inférieures proclinées et appareils d\'avancée',
+    question: 'Faut-il déconseiller un appareil fixe d\'avancée si les incisives inférieures sont déjà proclinées ?',
+    positionA: { label: 'Risque réel', text: 'Plus de récession sur les dents plus proclinées ; avancée des incisives inférieures avec Herbst et MARA.', sources: ['joss2010', 'pacha2024', 'ghislanzoni2011'] },
+    positionB: { label: 'Risque faible', text: '97 % des incisives sans récession après proclinaison par Herbst.', sources: ['ruf1998'] },
+    currentChoice: 'Pénalisation forte (peu adapté) pour les appareils fixes et le trainer. Aucun seuil d\'IMPA posé : jugement du praticien.',
+  },
+  {
+    id: 'V05',
+    risk: 'élevé',
+    title: 'Orientation chirurgicale',
+    question: 'Quels critères fixent le passage au camouflage ou à la chirurgie orthognathique ?',
+    positionA: { label: 'Camouflage dentoalvéolaire', text: 'Élastiques et distalisation corrigent la Classe II par effet dentoalvéolaire.', sources: ['janson2013', 'grec2013'] },
+    positionB: { label: 'Chirurgie', text: 'Aucune source retrouvée pour fixer les critères de sévérité squelettique.', sources: [] },
+    currentChoice: 'Le guide ne tranche pas : il oriente vers un avis spécialisé.',
+  },
+  {
+    id: 'V06',
+    risk: 'moyen',
+    title: 'Pondération des raisons (+2 à −2) et seuils de statut',
+    question: 'Les poids affectés aux raisons et les seuils de statut sont-ils cliniquement acceptables ?',
+    positionA: { label: 'Pondération simple et lisible', text: 'Chaque raison est visible avec son niveau de preuve.', sources: [] },
+    positionB: { label: 'Arbitraire', text: 'Aucune source ne fournit de pondération : choix du développeur à revoir par un clinicien.', sources: [] },
+    currentChoice: 'Pondération provisoire ; un « −2 » = peu adapté ; deux « −2 » = déconseillé.',
+  },
+  {
+    id: 'V07',
+    risk: 'moyen',
+    title: 'FEO versus fonctionnel en cas de composante mandibulaire',
+    question: 'Le FEO peut-il être proposé quand la composante dominante est mandibulaire ?',
+    positionA: { label: 'FEO comparable ou supérieur', text: 'Objectif atteint 100 % (FEO) vs 83 % (Bionator) ; gain squelettique des deux groupes attribué à la croissance mandibulaire.', sources: ['wheeler2002', 'keeling1998'] },
+    positionB: { label: 'FEO = action maxillaire', text: 'Le SNA est la cible démontrée du FEO (−1,63°/an, haute qualité).', sources: ['papageorgiou2017'] },
+    currentChoice: 'Neutre pour la composante mandibulaire ; jamais en piste logique dans ce cas.',
+  },
+  {
+    id: 'V08',
+    risk: 'moyen',
+    title: 'Effet sagittal de la disjonction',
+    question: 'La RME est-elle un traitement de la Classe II ?',
+    positionA: { label: 'Effet bénéfique', text: 'Amélioration de la Classe II comme effet secondaire (étude prospective non randomisée).', sources: ['guest2010'] },
+    positionB: { label: 'Non prouvé', text: '7 études, aucun essai randomisé ; effets controversés ou sans portée clinique.', sources: ['feres2015'] },
+    currentChoice: 'La RME est présentée comme prétraitement transversal, pas comme traitement sagittal.',
+  },
+  {
+    id: 'V09',
+    risk: 'moyen',
+    title: 'Aligneurs à avancée mandibulaire',
+    question: 'Faut-il plafonner les aligneurs à « possible avec réserves » ?',
+    positionA: { label: 'Alternative acceptable', text: 'Pas de différence significative avec les appareils fonctionnels classiques.', sources: ['sohn2026', 'ravera2021'] },
+    positionB: { label: 'Preuve insuffisante', text: '1 essai randomisé sur 9 études ; court terme ; volumes osseux sans différence avec les témoins.', sources: ['huang2026', 'kavasoglu2026'] },
+    currentChoice: 'Plafonnés à « possible avec réserves ».',
+  },
+  {
+    id: 'V10',
+    risk: 'moyen',
+    title: 'Hyperdivergence : quel effet sur le choix ?',
+    question: 'Faut-il pénaliser certains appareils chez l\'hyperdivergent ?',
+    positionA: { label: 'Prudence', text: 'Hausse de la hauteur faciale totale avec le trainer.', sources: ['usumez2004'] },
+    positionB: { label: 'Pas d\'effet démontré', text: 'L\'angle du plan mandibulaire n\'influence pas l\'atteinte de l\'objectif avec le Bionator/FEO.', sources: ['wheeler2002'] },
+    currentChoice: 'Seul le trainer est pénalisé (−1). Aucun seuil de divergence posé. Ruf & Pancherz (Herbst et plan mandibulaire) non relus.',
+  },
+  {
+    id: 'V11',
+    risk: 'moyen',
+    title: 'Classe II division 2',
+    question: 'Les preuves de la division 1 s\'extrapolent-elles à la division 2 ?',
+    positionA: { label: 'Extrapolation possible', text: 'Le principe fonctionnel est le même.', sources: [] },
+    positionB: { label: 'Hors preuves', text: 'Les essais retrouvés portent sur la division 1.', sources: ['batista2018'] },
+    currentChoice: 'Pistes plafonnées à « possible avec réserves ».',
+  },
+  {
+    id: 'V12',
+    risk: 'moyen',
+    title: 'Élastiques et distalisation en denture permanente',
+    question: 'Les règles « denture permanente + fin de croissance » sont-elles acceptables ?',
+    positionA: { label: 'Camouflage logique', text: 'Effet dentoalvéolaire démontré.', sources: ['janson2013', 'grec2013'] },
+    positionB: { label: 'Perte d\'ancrage', text: 'Mésialisation des prémolaires de 2,3 mm avec ancrage conventionnel.', sources: ['grec2013', 'antonarakis2008'] },
+    currentChoice: 'Piste logique en denture permanente et fin de croissance ; âge et critères squelettiques à préciser.',
+  },
+  {
+    id: 'V13',
+    risk: 'moyen',
+    title: 'Durée de suivi, seuil d\'échec',
+    question: 'À quel rythme réévaluer, et quel critère d\'échec utiliser ?',
+    positionA: { label: 'Critère de l\'essai', text: 'Overjet non ramené sous 4 mm à 12 mois (Pacha 2024).', sources: ['pacha2024'] },
+    positionB: { label: 'Non standardisé', text: 'Aucun critère validé retrouvé.', sources: [] },
+    currentChoice: 'Le guide cite l\'exemple de l\'essai ; seuils laissés au clinicien.',
+  },
+  {
+    id: 'V14',
+    risk: 'faible',
+    title: 'Normes céphalométriques pour la population tunisienne',
+    question: 'Quelles valeurs de référence utiliser ?',
+    positionA: { label: 'Normes classiques', text: 'Valeurs de référence habituelles.', sources: ['mcnamara1984'] },
+    positionB: { label: 'Normes locales', text: 'Des valeurs diffèrent dans l\'échantillon tunisien étudié ; pas de norme exploitable retrouvée.', sources: ['benamor2003'] },
+    currentChoice: 'Le guide n\'applique aucun seuil céphalométrique automatique ; le jugement est laissé au praticien.',
+  },
+  {
+    id: 'V15',
+    risk: 'faible',
+    title: 'Contrôles de plausibilité âge / denture / maturation',
+    question: 'Les plages d\'âge utilisées pour signaler un doute sont-elles raisonnables ?',
+    positionA: { label: 'Utiles contre les erreurs de saisie', text: 'Détectent des combinaisons improbables.', sources: [] },
+    positionB: { label: 'Variabilité individuelle', text: 'La maturation varie selon l\'enfant.', sources: ['mcnamara2018'] },
+    currentChoice: 'Signalés comme « à vérifier » sans bloquer l\'analyse ; plages non sourcées.',
+  },
+  {
+    id: 'V16',
+    risk: 'faible',
+    title: 'Hygiène, caries et voies aériennes',
+    question: 'Les garde-fous correspondants sont du consensus non sourcé : à confirmer.',
+    positionA: { label: 'Prudence', text: 'Traiter avant appareil fixe ; avis ORL si obstruction.', sources: [] },
+    positionB: { label: 'Absence de source', text: 'Aucune source retrouvée dans cette phase.', sources: [] },
+    currentChoice: 'Étiquetés « NON SOURCÉ ».',
+  },
+];

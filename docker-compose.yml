@@ -1,0 +1,7 @@
+services:
+  interceptor:
+    build: .
+    container_name: interceptor
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8085}:80"
